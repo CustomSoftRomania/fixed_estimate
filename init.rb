@@ -1,8 +1,8 @@
 Redmine::Plugin.register :fixed_estimate do
-  name 'Fixed Estimate plugin'
-  author 'Author name'
+  name 'Fixed Estimate'
+  author 'Teodor Pripoae'
   description 'This is a plugin for Redmine'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  url 'http://github.com/teodor-pripoae/fixed_estimate'
+  author_url 'http://toni.uige.it/about'
 end
