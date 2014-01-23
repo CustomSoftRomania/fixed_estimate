@@ -48,4 +48,10 @@ describe "fixed_estimate" do
     time_entry.save.should eql(false)
     time_entry.errors[:hours].count.should eql(1)
   end
+
+  it "does create time entry when estimated hours is nil" do
+    issue = Issue.create(name: "Test", estimated_hours: nil)
+    time_entry = TimeEntry.new(issue: issue, hours: 7)
+    time_entry.save.should eql(true)
+  end
 end

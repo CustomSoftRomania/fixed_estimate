@@ -6,7 +6,7 @@ module FixedEstimate
   end
 
   def check_fixed_estimate
-    if issue.spent_hours + self.hours > (issue.estimated_hours || 0)
+    if !issue.estimated_hours.nil? && issue.spent_hours + self.hours > issue.estimated_hours
       self.errors.add(:hours, "You cannot enter time_entries above estimated hours limit")
     end
   end
