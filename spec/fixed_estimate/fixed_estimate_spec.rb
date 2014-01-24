@@ -45,7 +45,7 @@ describe "fixed_estimate" do
 
   it "should not create time entry if limit is > estimated_hours" do
     issue = Issue.create(name: "Test", estimated_hours: 10)
-    time_entry = TimeEntry.new(issue: issue, hours: 11, activity: @dev)
+    time_entry = TimeEntry.new(issue: issue, hours: 12, activity: @dev)
     time_entry.save.should eql(false)
     time_entry.errors[:hours].count.should eql(1)
   end
@@ -54,7 +54,7 @@ describe "fixed_estimate" do
     issue = Issue.create(name: "Test", estimated_hours: 10)
     time_entry = TimeEntry.new(issue: issue, hours: 7, activity: @dev)
     time_entry.save.should eql(true)
-    time_entry = TimeEntry.new(issue: issue, hours: 4, activity: @dev)
+    time_entry = TimeEntry.new(issue: issue, hours: 5, activity: @dev)
     time_entry.save.should eql(false)
     time_entry.errors[:hours].count.should eql(1)
   end
@@ -69,7 +69,7 @@ describe "fixed_estimate" do
     issue = Issue.create(name: "Test", estimated_hours: 10)
     time_entry = TimeEntry.new(issue: issue, hours: 7, activity: @design)
     time_entry.save.should eql(true)
-    time_entry = TimeEntry.new(issue: issue, hours: 4, activity: @dev)
+    time_entry = TimeEntry.new(issue: issue, hours: 5, activity: @dev)
     time_entry.save.should eql(true)
     time_entry = TimeEntry.new(issue: issue, hours: 6.5, activity: @dev)
     time_entry.save.should eql(false)
@@ -83,5 +83,21 @@ describe "fixed_estimate" do
     time_entry.save.should eql(true)
     time_entry = TimeEntry.new(issue: issue, hours: 7, activity: @design)
     time_entry.save.should eql(true)
+  end
+
+  it "should allow to add up to 10% more" do
+    issue = Issue.create(name: "Test", estimated_hours: 10)
+    time_entry = TimeEntry.new(issue: issue, hours: 4, activity: @dev)
+    time_entry.save.should eql(true)
+    time_entry = TimeEntry.new(issue: issue, hours: 7, activity: @dev)
+    time_entry.save.should eql(true)
+  end
+
+  it "should not allow to add up to 10.01% more" do
+    issue = Issue.create(name: "Test", estimated_hours: 10)
+    time_entry = TimeEntry.new(issue: issue, hours: 4, activity: @dev)
+    time_entry.save.should eql(true)
+    time_entry = TimeEntry.new(issue: issue, hours: 7.01, activity: @dev)
+    time_entry.save.should eql(false)
   end
 end
