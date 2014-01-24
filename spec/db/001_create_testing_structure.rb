@@ -8,6 +8,11 @@ class CreateTestingStructure < ActiveRecord::Migration
     create_table :time_entries do |t|
       t.integer :issue_id
       t.float :hours
+      t.integer :activity_id
+    end
+
+    create_table :time_entry_activities do |t|
+      t.string :name
     end
   end
 end

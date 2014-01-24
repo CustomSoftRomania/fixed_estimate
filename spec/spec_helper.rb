@@ -27,6 +27,6 @@ ActiveRecord::Migrator.migrate("spec/db")
 RSpec.configure do |config|
 
   config.after(:each) do
-    [Issue, TimeEntry].each { |klass| klass.delete_all }
+    [Issue, TimeEntry, TimeEntryActivity].each { |klass| klass.delete_all }
   end
 end
